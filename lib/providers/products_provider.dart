@@ -6,6 +6,7 @@ import 'package:graphketing_assignment/services/https_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductsProvider extends ChangeNotifier {
+  // getProductsData will be called and all products will be loaded in _allProducts List
   ProductsProvider() {
     getProductsData();
   }
@@ -34,8 +35,8 @@ class ProductsProvider extends ChangeNotifier {
       _cartProductIds = prefs.getStringList('productIds')!;
 
       // Fetching the cart products from allProducts matching the product IDs and loading it into cartProducts
-      for (var id in _cartProductIds) {
-        final product = _allProducts.firstWhere((element) => element.id == int.parse(id));
+      for (var cartProductId in _cartProductIds) {
+        final product = _allProducts.firstWhere((element) => element.id == int.parse(cartProductId));
         _cartProducts.add(product);
       }
     }
@@ -45,7 +46,7 @@ class ProductsProvider extends ChangeNotifier {
   // Fetching the products data from the API
   Future<void> getProductsData() async {
     try {
-      // Setting loading state to true
+      // Setting loading state to true till the time products get loaded
       _isLoading = true;
       notifyListeners();
       _allProducts = await HttpsService().getProductsData();

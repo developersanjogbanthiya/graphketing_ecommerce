@@ -101,12 +101,21 @@ class ProductDetailScreen extends StatelessWidget {
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.white,
                       ),
-                      icon: Icon(
-                        Icons.shopping_bag_outlined,
-                        color: Colors.white,
-                      ),
+                      icon: !isProductInCart
+                          ? Icon(
+                              Icons.shopping_bag_outlined,
+                              color: Colors.white,
+                            )
+                          : Icon(
+                              Icons.shopping_bag,
+                              color: Colors.white,
+                            ),
                       // Changing the button label based on the product is in cart or not
-                      label: !isProductInCart ? Text('Add to Cart') : Text('Remove from Cart'),
+                      label: !isProductInCart
+                          ? Text(
+                              'Add to Cart',
+                            )
+                          : Text('Remove from Cart'),
                     );
                   },
                 ),
