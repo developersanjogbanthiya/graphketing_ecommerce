@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:graphketing_assignment/models/product_model.dart';
 import 'package:graphketing_assignment/providers/products_provider.dart';
 import 'package:graphketing_assignment/widgets/single_product.dart';
@@ -19,22 +20,39 @@ class CartScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-            itemCount: productsProvider.cartProducts.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.9,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-            ),
-            itemBuilder: (context, index) {
-              ProductModel productModel = productsProvider.cartProducts[index];
-              return SingleProduct(
-                productModel: productModel,
-              );
-            }),
-      ),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Consumer<ProductsProvider>(
+                builder: (context, value, child) {
+                  return Text(
+                    'Cart Total: \$${value.cartTotal}',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  );
+                },
+              ),
+              Gap(12),
+              Expanded(
+                child: GridView.builder(
+                  itemCount: productsProvider.cartProducts.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.9,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                  ),
+                  itemBuilder: (context, index) {
+                    ProductModel productModel = productsProvider.cartProducts[index];
+                    return SingleProduct(
+                      productModel: productModel,
+                    );
+                  },
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

@@ -23,6 +23,9 @@ class ProductsProvider extends ChangeNotifier {
   String _errorMessage = '';
   String get erorMessage => _errorMessage;
 
+  double _cartTotal = 0.0;
+  double get cartTotal => _cartTotal;
+
   // Storing cart product IDs
   List<String> _cartProductIds = [];
 
@@ -40,6 +43,7 @@ class ProductsProvider extends ChangeNotifier {
         _cartProducts.add(product);
       }
     }
+    calculateCartTotal();
     notifyListeners();
   }
 
@@ -73,6 +77,8 @@ class ProductsProvider extends ChangeNotifier {
     }
     // Saving into the local storage
     prefs.setStringList('productIds', _cartProductIds);
+    // Calculating cart total
+    calculateCartTotal();
     notifyListeners();
   }
 
@@ -88,6 +94,18 @@ class ProductsProvider extends ChangeNotifier {
     }
     // Saving into the local storage
     prefs.setStringList('productIds', _cartProductIds);
+    // Calculating cart total
+    calculateCartTotal();
+    notifyListeners();
+  }
+
+  calculateCartTotal() {
+    // Resetting cart total
+    _cartTotal = 0.0;
+    // Calculating cartTotal
+    for (var cartProduct in cartProducts) {
+      _cartTotal += cartProduct.price;
+    }
     notifyListeners();
   }
 }
