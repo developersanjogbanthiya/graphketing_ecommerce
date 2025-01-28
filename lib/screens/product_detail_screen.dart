@@ -68,6 +68,7 @@ class ProductDetailScreen extends StatelessWidget {
                 Gap(8),
                 Consumer<ProductsProvider>(
                   builder: (context, value, child) {
+                    // Checking the product if it is there in cart or not
                     bool isProductInCart =
                         productsProvider.cartProducts.where((element) => element.id == productModel.id).isNotEmpty;
 
